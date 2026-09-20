@@ -93,4 +93,4 @@ class SkyGuardApp(App):
             self.ui.label_status.text = text
 
 if __name__ == '__main__':
-    SkyGuardApp().run() 
+    SkyGuardApp().run()  
