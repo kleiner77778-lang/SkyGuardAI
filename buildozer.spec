@@ -1,17 +1,26 @@
-[app]
-title = SkyGuardAI
-package.name = skyguardai
-package.domain = org.test
-source.dir = .
-source.include_exts = py,png,jpg,kv,atlas
-version = 0.1
-requirements = python3,kivy,requests
+name: Build Android APK
 
-orientation = portrait
-osx.python_version = 3
-osx.kivy_version = 1.9.1
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
 
-fullscreen = 0
-android.permissions = INTERNET
-android.api = 33
-android.minapi = 21
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Build with Buildozer
+      uses: DigiPie/buildozer-action@v2
+      with:
+        command: buildozer android debug
+        submodule: false
+
+    - name: Upload APK Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: SkyGuardAI-APK
+        path: bin/*.apk
